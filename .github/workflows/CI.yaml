@@ -9,6 +9,9 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v4
         with:
