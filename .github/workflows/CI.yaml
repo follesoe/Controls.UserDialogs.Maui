@@ -26,11 +26,15 @@ jobs:
           dotnet workload install maui maui-android maui-ios maui-maccatalyst
           dotnet workload list
 
-      - name: Build project and generate NuGet package
+      - name: Build library
+        run: |
+          dotnet build Controls.UserDialogs.Maui/Controls.UserDialogs.Maui.csproj -c Release
+
+      - name: Pack NuGet package
         run: |
           dotnet pack Controls.UserDialogs.Maui/Controls.UserDialogs.Maui.csproj --version-suffix "$GITHUB_REF_NAME_SLUG.$GITHUB_RUN_NUMBER" -c Release -o out
 
-      - name: Push generated package to GitHub registry
+      - name: Push NuGet package to GitHub registry
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
