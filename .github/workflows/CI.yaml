@@ -37,5 +37,11 @@ jobs:
       - name: Push NuGet package to GitHub registry
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          OWNER: ${{ github.repository_owner }}
         run: |
-          dotnet nuget push ./out/*.nupkg --skip-duplicate --no-symbols --api-key $NUGET_AUTH_TOKEN
+          ls ./out
+          dotnet nuget push ./out/*.nupkg \
+            --skip-duplicate \
+            --no-symbols \
+            --api-key $NUGET_AUTH_TOKEN \
+            --source "https://nuget.pkg.github.com/$OWNER/index.json"
